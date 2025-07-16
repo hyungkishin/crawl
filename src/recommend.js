@@ -1,20 +1,18 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const DATA_PATH = path.join(__dirname, "../data/articles.jsonl");
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const FILE = path.join(__dirname, "../data/articles.jsonl");
 
-function recommendArticles(userInterest = "정책/정치", max = 5) {
-  if (!fs.existsSync(DATA_PATH)) return [];
+export function recommend(interest = "발언/논평", max = 5) {
+  if (!fs.existsSync(FILE)) return [];
 
-  const all = fs.readFileSync(DATA_PATH, "utf-8")
-    .split("\n")
-    .filter(Boolean)
-    .map(JSON.parse);
+  const lines = fs.readFileSync(FILE, "utf-8").split("\n").filter(Boolean);
+  const articles = lines.map((line) => JSON.parse(line));
 
-  return all
-    .filter((a) => a.type === userInterest)
+  return articles
+    .filter((a) => a.type === interest)
     .sort((a, b) => new Date(b.crawledAt) - new Date(a.crawledAt))
     .slice(0, max);
 }
-
-module.exports = { recommendArticles };

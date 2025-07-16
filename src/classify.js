@@ -1,17 +1,9 @@
-function classifyArticleType(title) {
-  const keywordMap = [
-    { type: "정책/정치", keywords: ["vote", "senate", "bill", "campaign", "congress"] },
-    { type: "갈등/외교", keywords: ["threaten", "attack", "sanction", "strike", "conflict"] },
-    { type: "발언/논평", keywords: ["says", "claims", "calls", "tells", "slams"] },
-    { type: "사건/사고", keywords: ["crash", "arrest", "shooting", "killed", "dies", "fire"] },
-    { type: "경제/비즈", keywords: ["market", "inflation", "stock", "startup", "economy"] }
-  ];
-
-  const lower = title.toLowerCase();
-  for (const { type, keywords } of keywordMap) {
-    if (keywords.some(k => lower.includes(k))) return type;
-  }
+export function classify(title) {
+  const t = title.toLowerCase();
+  if (t.includes("says") || t.includes("slams") || t.includes("claims")) return "발언/논평";
+  if (t.includes("bill") || t.includes("vote") || t.includes("policy")) return "정책/정치";
+  if (t.includes("fire") || t.includes("dies") || t.includes("accident")) return "사건/사고";
+  if (t.includes("conflict") || t.includes("gaza") || t.includes("military")) return "외교/군사";
+  if (t.includes("market") || t.includes("stock") || t.includes("inflation")) return "경제/비즈";
   return "기타";
 }
-
-module.exports = { classifyArticleType };

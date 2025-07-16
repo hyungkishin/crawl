@@ -1,16 +1,11 @@
 {
-  "name": "test",
+  "name": "news-crawler",
   "version": "1.0.0",
-  "main": "crawler.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "crawl": "node ./src/crawler.js"
+    "crawl": "node src/crawler.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "puppeteer": "^24.13.0"
+    "rss-parser": "^3.12.0"
   }
 }
