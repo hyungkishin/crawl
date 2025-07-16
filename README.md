@@ -11,6 +11,27 @@
 
 수동으로 json 데이터가 root 디렉토리 data <- 폴더에 쌓였다면, 매일 정해진 시간에 돌릴 수 있도록 cron 설정
 
+
+우선 2번까지 진행 부탁드려요 :) 3번부터는 조금만더 확인해보겠습니다.
+---------
+
 ## 3. 의존성 설치 필요
 - npm install node-cron
+
+## 4. 의존성 설치 2 필요
+- npm install -g pm2
+
+## 5. 스케줄러 실행 등록
+- pm2 start src/scheduler.js --name news-crawler
+
+## PM2 상태 확인
+- pm2 list
+
+## 윈도우 부팅설정
+- pm2 startup
+
+## 자동 설정 저장
+- pm2 save
+
+
 
