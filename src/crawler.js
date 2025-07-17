@@ -1,11 +1,11 @@
-import Parser from "rss-parser";
-import { classify } from "./classify.js";
-import { saveArticles } from "./storage.js";
-import { recommend } from "./recommend.js";
+const Parser = require("rss-parser");
+const { classify } = require("./classify");
+const { saveArticles } = require("./storage");
+const { recommend } = require("./recommend");
 
-export async function main() {
+async function main() {
   const parser = new Parser();
-  const query = "biden"; // 원하는 키워드 바꿔서 실행 ㄱㄱ
+  const query = "biden";
 
   const feed = await parser.parseURL(
     `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-US&gl=US&ceid=US:en`
@@ -33,7 +33,4 @@ export async function main() {
   });
 }
 
-// 직접 실행한 경우만 실행 합니다.
-if (import.meta.url === `file://${process.argv[1]}`) {
-  main();
-}
+main();

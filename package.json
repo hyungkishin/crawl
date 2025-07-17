@@ -1,11 +1,15 @@
 {
   "name": "news-crawler",
   "version": "1.0.0",
-  "type": "module",
+  "bin": "src/crawler.js",
   "scripts": {
     "crawl": "node src/crawler.js"
   },
   "dependencies": {
     "rss-parser": "^3.12.0"
+  },
+  "pkg": {
+    "targets": ["node16-win-x64"],
+    "outputPath": "dist"
   }
 }

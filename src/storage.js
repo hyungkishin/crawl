@@ -1,12 +1,9 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+const fs = require("fs");
+const path = require("path");
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-export function saveArticles(articles) {
+function saveArticles(articles) {
   const now = new Date();
-  const today = now.toISOString().slice(0, 10); // YYYY-MM-DD 형식 ㄱㄱ 
+  const today = now.toISOString().slice(0, 10); // YYYY-MM-DD
   const filename = `articles-${today}.jsonl`;
   const filePath = path.join(__dirname, `../data/${filename}`);
 
@@ -20,5 +17,6 @@ export function saveArticles(articles) {
   });
   stream.end();
 
-  console.log(`저장완료 → ${filename}`);
+  console.log(`저장 완료 : ${filename}`);
 }
+module.exports = { saveArticles };
