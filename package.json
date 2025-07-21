@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "bin": "src/crawler.js",
   "scripts": {
-    "crawl": "node src/crawler.js"
+    "cl": "node src/crawler.js",
+    "rp" :"node src/scheduler.js"
   },
   "dependencies": {
     "rss-parser": "^3.12.0"
