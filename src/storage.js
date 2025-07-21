@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
+// [1] 기사 저장 함수
 function saveArticles(articles) {
   const now = new Date();
   const today = now.toISOString().slice(0, 10); // YYYY-MM-DD
@@ -20,23 +21,23 @@ function saveArticles(articles) {
   console.log(`저장 완료 : ${filename}`);
 }
 
-// ✅ 최근 N일치 파일 병합해서 배열로 리턴하는 함수
-function getPastDates(days) {
+// [2] N일 이전까지의 날짜 배열 생성
+function getPastDates(days, baseDate = new Date()) {
   const dates = [];
-  const today = new Date();
   for (let i = 0; i < days; i++) {
-    const d = new Date(today);
-    d.setDate(today.getDate() - i);
+    const d = new Date(baseDate);
+    d.setDate(d.getDate() - i);
     const yyyyMMdd = d.toISOString().slice(0, 10);
     dates.push(yyyyMMdd);
   }
   return dates;
 }
 
-function mergeRecentFiles(category, days = 14, baseDir = path.resolve(__dirname, "../data")) {
+// [3] 최근 N일치 파일 병합 (특정 기준 날짜부터)
+function mergeRecentFiles(category, days = 14, baseDate = new Date(), baseDir = path.resolve(__dirname, "../data")) {
   const merged = [];
+  const dates = getPastDates(days, baseDate);
 
-  const dates = getPastDates(days);
   for (const date of dates) {
     const safeCategory = category.replace(/\s+/g, "_");
     const filePath = path.join(baseDir, date, `rss-${safeCategory}.jsonl`);

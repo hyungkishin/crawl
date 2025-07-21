@@ -1,4 +1,3 @@
-// crawler.js
 const Parser = require("rss-parser");
 const fs = require("fs");
 const path = require("path");
@@ -16,11 +15,23 @@ const categories = [
   "Local news",
 ];
 
-async function fetchAndSave(category) {
+// 날짜 유틸: YYYY-MM-DD 문자열 → Date 객체
+function parseDateArg() {
+  const arg = process.argv[2];
+  if (!arg) return new Date(); // 기본 오늘
+  const d = new Date(arg);
+  if (isNaN(d)) {
+    console.error("❌ 날짜 포맷이 잘못됨. YYYY-MM-DD 형식으로 입력하세요.");
+    process.exit(1);
+  }
+  return d;
+}
+
+async function fetchAndSave(category, targetDateStr) {
   const query = encodeURIComponent(category);
   const rssUrl = `https://news.google.com/rss/search?q=${query}&hl=en-US&gl=US&ceid=US:en`;
 
-  console.log(`📥 [${category}] RSS 수집 시작`);
+  console.log(`📥 [${targetDateStr}][${category}] RSS 수집 시작`);
 
   let feed;
   try {
@@ -39,9 +50,8 @@ async function fetchAndSave(category) {
     timestamp: new Date().toISOString(),
   }));
 
-  const today = new Date().toISOString().slice(0, 10);
   const safeCategory = category.replace(/\s+/g, "_");
-  const outPath = path.resolve(__dirname, `../data/${today}/rss-${safeCategory}.jsonl`);
+  const outPath = path.resolve(__dirname, `../data/${targetDateStr}/rss-${safeCategory}.jsonl`);
 
   if (!fs.existsSync(path.dirname(outPath))) {
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
@@ -57,11 +67,14 @@ async function fetchAndSave(category) {
 }
 
 async function main() {
+  const targetDate = parseDateArg(); // Date 객체
+  const targetDateStr = targetDate.toISOString().slice(0, 10); // YYYY-MM-DD
+
   for (const category of categories) {
-    await fetchAndSave(category);
+    await fetchAndSave(category, targetDateStr);
   }
 
-  console.log("\n🟢 오늘자 전체 카테고리 수집 완료");
+  console.log(`\n🟢 ${targetDateStr} 기준 전체 카테고리 수집 완료`);
 }
 
 main();
