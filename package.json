@@ -4,13 +4,17 @@
   "bin": "src/crawler.js",
   "scripts": {
     "cl": "node src/crawler.js",
-    "rp" :"node src/scheduler.js"
+    "rp": "node src/scheduler.js",
+    "xl": "node src/exportToExcel.js"
   },
   "dependencies": {
-    "rss-parser": "^3.12.0"
+    "rss-parser": "^3.12.0",
+    "xlsx": "^0.18.5"
   },
   "pkg": {
-    "targets": ["node16-win-x64"],
+    "targets": [
+      "node16-win-x64"
+    ],
     "outputPath": "dist"
   }
 }

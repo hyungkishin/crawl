@@ -36,3 +36,7 @@ yarn-error.log*
 next-env.d.ts
 
 /dist
+
+# 데이터/결과 파일 무시
+data/
+export/
